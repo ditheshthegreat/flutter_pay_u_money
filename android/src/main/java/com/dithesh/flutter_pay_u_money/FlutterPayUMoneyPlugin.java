@@ -30,12 +30,8 @@ import static android.app.Activity.RESULT_OK;
  * FlutterPayUMoneyPlugin
  */
 public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
+    private static final String TAG = "FlutterPayUMoneyPlugin";
     private MethodChannel channel;
-    public static final String TAG = "LOGGER : ";
     private Activity activity;
     private MethodChannel.Result wholeResult;
 
@@ -47,14 +43,23 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        if (call.method.equals("hashIt")) {
-            generateHashKey(String.valueOf(call.arguments), result);
-        } else if (call.method.equals("pay")) {
-            System.out.println("Result :: " + call.arguments);
-            wholeResult = result;
-            launchPayUMoneyFlow(call);
-        } else {
-            result.notImplemented();
+        switch (call.method) {
+            case "hashIt":
+                generateHashKey(String.valueOf(call.arguments), result);
+                break;
+            case "testPay":
+                System.out.println("arguments :: " + call.arguments);
+                wholeResult = result;
+                launchPayUMoneyFlow(call, true);
+                break;
+            case "livePay":
+                System.out.println("arguments :: " + call.arguments);
+                wholeResult = result;
+                launchPayUMoneyFlow(call, false);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
 
@@ -88,7 +93,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
 
-    private void launchPayUMoneyFlow(MethodCall call) {
+    private void launchPayUMoneyFlow(MethodCall call, boolean environment) {
         String udf1 = "",
                 udf2 = "",
                 udf3 = "",
@@ -100,9 +105,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
                 udf9 = "",
                 udf10 = "";
         PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
-
-        boolean environment = call.argument("environment");
-        List<String> udfs = call.argument("udfs");
+        List<String> udfs = call.argument("udf");
         String merchantKey = call.argument("merchantKey");
         String merchantId = call.argument("merchantId");
         String surl = "https://www.payumoney.com/mobileapp/payumoney/success.php";
@@ -114,28 +117,18 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
         String amount = call.argument("amount");
         String txnId = call.argument("txnId");
         if (udfs != null) {
-            udf1 = udfs.get(0).equals("|") ? "" : udfs.get(0);
-            udf2 = udfs.get(1).equals("|") ? "" : udfs.get(1);
-            udf3 = udfs.get(2).equals("|") ? "" : udfs.get(2);
-            udf4 = udfs.get(3).equals("|") ? "" : udfs.get(3);
-            udf5 = udfs.get(4).equals("|") ? "" : udfs.get(4);
-            udf6 = udfs.get(5).equals("|") ? "" : udfs.get(5);
-            udf7 = udfs.get(6).equals("|") ? "" : udfs.get(6);
-            udf8 = udfs.get(7).equals("|") ? "" : udfs.get(7);
-            udf9 = udfs.get(8).equals("|") ? "" : udfs.get(8);
-            udf10 = udfs.get(9).equals("|") ? "" : udfs.get(9);
+            udf1 = udfs.get(0);
+            udf2 = udfs.get(1);
+            udf3 = udfs.get(2);
+            udf4 = udfs.get(3);
+            udf5 = udfs.get(4);
+            udf6 = udfs.get(5);
+            udf7 = udfs.get(6);
+            udf8 = udfs.get(7);
+            udf9 = udfs.get(8);
+            udf10 = udfs.get(9);
         }
         String hash = call.argument("hash");
-        android.util.Log.i(TAG, "launchPayUMoneyFlow: " + udf1
-                + udf2
-                + udf3
-                + udf4
-                + udf5
-                + udf6
-                + udf7
-                + udf8
-                + udf9
-                + udf10);
 
         builder.setAmount(amount)
                 .setTxnId(txnId)
@@ -170,7 +163,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
 
-    //        String hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt";
+    // String hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt";
     private void generateHashKey(String hashString, Result result) {
         StringBuilder hash = new StringBuilder();
         MessageDigest messageDigest;
