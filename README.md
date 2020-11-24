@@ -1,6 +1,9 @@
 # flutter_pay_u_money
 
-A new Flutter plugin.
+A Flutter plugin for payumoney gateway in the mobile platform. Supports Android only.
+
+#Contributing
+feel free to contribute in iOS
 
 ## Getting Started
 

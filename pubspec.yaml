@@ -1,8 +1,7 @@
 name: flutter_pay_u_money
-description: A new Flutter plugin.
-version: 0.0.3
-author:
-homepage:
+description: Flutter plugin for payumoney gateway
+version: 0.5.0
+homepage: "https://github.com/ditheshthegreat/flutter_pay_u_money"
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
