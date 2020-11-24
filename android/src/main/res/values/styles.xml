@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <style name="MyAppTheme" parent="PayumoneyAppTheme">
+        <item name="colorPrimary">@color/payumoney_primary</item>
+        <item name="colorPrimaryDark">@color/payumoney_primary_dark</item>
+        <item name="colorAccent">@color/payumoney_primary</item>
+        <item name="colorButtonNormal">@color/payumoney_primary</item>
+        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+    </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="colorAccent">@color/payumoney_primary</item>
+    <item name="android:textColorPrimary">@color/payumoney_text_color</item>
+    </style>-->
+</resources>
