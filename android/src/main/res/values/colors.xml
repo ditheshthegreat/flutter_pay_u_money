@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="payumoney_primary">#FFBF00</color>
+    <color name="payumoney_primary_dark">#52575d</color>
+    <color name="payumoney_text_color">#000000</color>
+</resources>
