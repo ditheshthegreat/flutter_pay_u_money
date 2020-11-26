@@ -2,6 +2,8 @@
 
 A Flutter plugin for payumoney gateway in the mobile platform. Supports Android only.
 
+
+
 # Contributing
 **Currently supported for only Android Platform. Not for iOS right now but wait for some more days it will be here with new update.
 And one more thing if you want to make it more better or want to add more platforms support then feel free to contribute.**
@@ -28,7 +30,7 @@ PayUData _payuData = PayUData(
 
   ///optional you can add an hash from server side or you can generate from here
   ///the hash sequence should be => key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt;
-  hash: "",
+  //hash: "",
 
   ///this udfs[User Defined Field] is optional you can add up to 10 if you want extra field to pass
   // udf: ["udf1", "udf2", "udf3", "udf4", "udf5", "udf6", "udf7", "udf8", "udf9", "udf10"],

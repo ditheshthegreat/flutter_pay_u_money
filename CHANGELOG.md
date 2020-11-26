@@ -1,4 +1,8 @@
 
+## 0.5.2
+* Changed README
+* Fixed minor bugs
+
 ## 0.5.1
 * Simplified example
 * Fixed minor bugs

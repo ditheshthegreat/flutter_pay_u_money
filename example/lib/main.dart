@@ -22,7 +22,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     PayUData _payuData = PayUData(
       ///your merchant ID
@@ -42,7 +41,7 @@ class _MyAppState extends State<MyApp> {
 
       ///optional you can add an hash from server side or you can generate from here
       ///the hash sequence should be => key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt;
-      hash: "",
+      //hash: "",
 
       ///this udfs[User Defined Field] is optional you can add up to 10 if you want extra field to pass
       // udf: ["udf1", "udf2", "udf3", "udf4", "udf5", "udf6", "udf7", "udf8", "udf9", "udf10"],
