@@ -108,8 +108,8 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
         List<String> udfs = call.argument("udf");
         String merchantKey = call.argument("merchantKey");
         String merchantId = call.argument("merchantId");
-        String sUrl = call.argument("sUrl") != null ? call.argument("sUrl") : "https ://www.payumoney.com/mobileapp/payumoney/success.php";
-        String fUrl = call.argument("fUrl") != null ? call.argument("fUrl") : "https://www.payumoney.com/mobileapp/payumoney/failure.php";
+        String sUrl = call.argument("sUrl") != null ? (String) call.argument("sUrl") : "https ://www.payumoney.com/mobileapp/payumoney/success.php";
+        String fUrl = call.argument("fUrl") != null ? (String) call.argument("fUrl") : "https://www.payumoney.com/mobileapp/payumoney/failure.php";
         String firstName = call.argument("firstName");
         String email = call.argument("email");
         String phone = call.argument("phone");

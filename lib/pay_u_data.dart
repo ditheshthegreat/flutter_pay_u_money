@@ -14,43 +14,60 @@ class PayUData {
     this.hash,
     this.sUrl,
     this.fUrl,
-    udf,
+    List<String> udf,
   }) : udf = udf ?? List<String>.generate(10, (index) => '');
 
-  String amount;
-  String txnId;
-  String phone;
-  String merchantKey;
+  /// [merchantId], [merchantKey] and [salt] will only get when registered in payUmoney
+  /// [payu.in](https://www.payu.in/)
+  ///
+  /// Give merchantId from payumoney.
   String merchantId;
-  String productName;
+
+  /// Give merchantKey from payumoney.
+  String merchantKey;
+
+  ///There is no need of specific txnId you can provide custom alphanumeric.
+  String txnId;
+
+  ///Provide customer name.
   String firstName;
+
+  ///Provide customer email.
   String email;
+
+  ///Provide customer phone.
+  String phone;
+
+  ///Provide product name.
+  String productName;
+
+  ///Amount you want to pay.
+  String amount;
+
+  ///If you generate hash from server provide in this field. Otherwise keep it blank.
+  ///
+  /// For generating hash natively call.
+  /// ```
+  /// await flutterPayUMoney.hashIt();
+  /// ```
   String hash;
+
+  /// Give salt from payumoney.
   String salt;
+
+  /// success url optional.
+  /// default url is [https://www.payumoney.com/mobileapp/payumoney/success.php](https://www.payumoney.com/mobileapp/payumoney/success.php)
   String sUrl;
+
+  /// failure url optional.
+  /// default url is [https://www.payumoney.com/mobileapp/payumoney/failure.php](https://www.payumoney.com/mobileapp/payumoney/failure.php)
   String fUrl;
 
+  ///User can add extra field to pass from your app to your server. If nothing leave it blank.
   ///maximum 10 udf
   List<String> udf;
 
-  factory PayUData.fromJson(Map<String, dynamic> json) => PayUData(
-        merchantKey: json['merchantKey'],
-        merchantId: json['merchantId'],
-        firstName: json['firstName'],
-        email: json['email'],
-        phone: json['phone'],
-        txnId: json['txnId'],
-        productName: json['productName'],
-        amount: json['amount'],
-        hash: json['hash'],
-        salt: json['salt'],
-        sUrl: json['sUrl'],
-        fUrl: json['fUrl'],
-        udf: json['udf'] == null
-            ? List<String>.generate(10, (index) => '')
-            : List<String>.from(json['udf'].map((x) => x)),
-      );
-
+  ///Convert Object to Map
   Map<String, dynamic> toJson() => {
         'merchantKey': merchantKey,
         'merchantId': merchantId,

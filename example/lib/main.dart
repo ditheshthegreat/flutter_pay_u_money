@@ -25,30 +25,43 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     var _payuData = PayUData(
       ///your merchant ID
-      merchantId: '',
+      merchantId: '7290778',
 
       ///your merchant key
-      merchantKey: '',
+      merchantKey: 'OlVevRfJ',
 
       ///your salt
-      salt: '',
+      salt: 'Uvd6Mj7rDI',
 
       ///product name
       productName: 'blah blah',
 
       /// custom transaction id
       txnId: 'some1234thing',
-
-      ///optional you can add an hash from server side or you can generate from here
-      ///the hash sequence should be => key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt;
-      //hash: '',
-
-      ///this udfs[User Defined Field] is optional you can add up to 10 if you want extra field to pass
-      // udf: ['udf1', 'udf2', 'udf3', 'udf4', 'udf5', 'udf6', 'udf7', 'udf8', 'udf9', 'udf10'],
       amount: '125',
       firstName: 'tester',
       email: 'test@gmail.com',
       phone: '9876543210',
+
+      ///optional you can add an hash from server side or you can generate from here
+      ///the hash sequence should be => key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt;
+      // hash: '',
+
+      ///this udf [User Defined Field] is optional you can add up to 10 if you want extra field to pass
+      udf: [
+        'udf1',
+        'udf2',
+        'udf3',
+        'udf4',
+        'udf5',
+        'udf6',
+        'udf7',
+        'udf8',
+        'udf9',
+        'udf10',
+      ],
+      // sUrl: '',
+      // fUrl: '',
     );
 
     ///for sandbox
