@@ -12,44 +12,44 @@ If you want to make it more better or want to add more platforms support then fe
 #### Initiate Payment
 
 ```    
-PayUData _payuData = PayUData(
+var _payuData = PayUData(
   ///your merchant ID
-  merchantId: "",
+  merchantId: '',
 
   ///your merchant key
-  merchantKey: "",
+  merchantKey: '',
 
   ///your salt
-  salt: "",
+  salt: '',
 
   ///product name
-  productName: "blah blah",
+  productName: 'blah blah',
 
   /// custom transaction id
-  txnId: "some1234thing",
+  txnId: 'some1234thing',
 
   ///optional you can add an hash from server side or you can generate from here
   ///the hash sequence should be => key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt;
-  //hash: "",
+  //hash: '',
 
   ///this udfs[User Defined Field] is optional you can add up to 10 if you want extra field to pass
-  // udf: ["udf1", "udf2", "udf3", "udf4", "udf5", "udf6", "udf7", "udf8", "udf9", "udf10"],
-  amount: "125",
-  firstName: "tester",
-  email: "test@gmail.com",
-  phone: "9876543210",
+  // udf: ['udf1', 'udf2', 'udf3', 'udf4', 'udf5', 'udf6', 'udf7', 'udf8', 'udf9', 'udf10'],
+  amount: '125',
+  firstName: 'tester',
+  email: 'test@gmail.com',
+  phone: '9876543210',
 );
 ```
 #### For Sandbox
     
 ```
- FlutterPayUMoney _flutterPayUMoney = FlutterPayUMoney.test(payUData: _payuData);
+ var _flutterPayUMoney = FlutterPayUMoney.test(payUData: _payuData);
 ```
 
 #### For Live
    
 ```
- FlutterPayUMoney _flutterPayUMoney = FlutterPayUMoney.production(payUData: _payuData);
+ var _flutterPayUMoney = FlutterPayUMoney.production(payUData: _payuData);
 ```
    
 #### To Generate Hash Natively
@@ -82,18 +82,18 @@ To generate hash from server side
 ```php
     <?php 
     header('Content-Type: application/json');
-    header("Access-Control-Allow-Origin: *");
+    header('Access-Control-Allow-Origin: *');
     
 function preparePayuPayment($params)
 {        
-    $SS_URL = (isset($params["SS_URL"]))? $params["SS_URL"] : "";
-    $FF_URL = (isset($params["FF_URL"]))? $params["FF_URL"] : "";
-    $params["key"] = "KSXB9Z3J";    
+    $SS_URL = (isset($params['SS_URL']))? $params['SS_URL'] : '';
+    $FF_URL = (isset($params['FF_URL']))? $params['FF_URL'] : '';
+    $params['key'] = 'KSXB9Z3J';    
     
-    $hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
+    $hashSequence = 'key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10';
     
     $formError = 0;
-    $txnid = "";
+    $txnid = '';
     if(empty($params['txnid']))
     {
       $txnid = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
@@ -121,7 +121,7 @@ function preparePayuPayment($params)
                   $hash_string .= isset($params[$hash_var]) ? $params[$hash_var] : '';
                   $hash_string .= '|';
               }
-            $hash_string .= $params["SALT_KEY"];
+            $hash_string .= $params['SALT_KEY'];
             $hash = strtolower(hash('sha512', $hash_string));
         }
     }
@@ -130,36 +130,36 @@ function preparePayuPayment($params)
         $hash = $params['hash'];
     }
     
-    $params["hash"] = $hash;
-    return array("status"=>$formError, "params"=>$params);
+    $params['hash'] = $hash;
+    return array('status'=>$formError, 'params'=>$params);
 }
-if($_SERVER['REQUEST_METHOD'] == "POST") {
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
   $allParmas = array(
-       "key" => "KSXB9Z3J",
-       "txnid" => $_POST["txnid"],
-       "amount" => $_POST["amount"],
-       "SALT_KEY" => "AwuZ5FVG4c",
-       "productinfo" => $_POST["productinfo"],
-       "firstname" => $_POST["firstname"],
-       "email" => $_POST["email"],
-       "phone"=> $_POST["phone"],
-       "udf1" => "",
-       "udf2" => "",
-       "udf3" => "",
-       "udf4" => "",
-       "udf5" => "",
-       "udf6" => "",
-       "udf7" => "",
-       "udf8" => "",
-       "udf9" => "",
-       "udf10" => ""
+       'key' => 'KSXB9Z3J',
+       'txnid' => $_POST['txnid'],
+       'amount' => $_POST['amount'],
+       'SALT_KEY' => 'AwuZ5FVG4c',
+       'productinfo' => $_POST['productinfo'],
+       'firstname' => $_POST['firstname'],
+       'email' => $_POST['email'],
+       'phone'=> $_POST['phone'],
+       'udf1' => '',
+       'udf2' => '',
+       'udf3' => '',
+       'udf4' => '',
+       'udf5' => '',
+       'udf6' => '',
+       'udf7' => '',
+       'udf8' => '',
+       'udf9' => '',
+       'udf10' => ''
      );
      $returnData = preparePayuPayment($allParmas);
      echo json_encode($returnData);
 }else {
 
   echo json_encode(array(
-    "error" => "data not passed",
+    'error' => 'data not passed',
 
   ));
 }

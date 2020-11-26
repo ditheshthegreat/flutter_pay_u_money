@@ -1,56 +1,60 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_pay_u_money/pay_u_data.dart';
 
 class FlutterPayUMoney {
-  static const MethodChannel _channel = const MethodChannel('flutter_pay_u_money');
+  static const MethodChannel _channel = MethodChannel('flutter_pay_u_money');
   final bool isTest;
   final PayUData payUData;
 
   ///For sandbox use test method or use production method
   FlutterPayUMoney.test({
-    PayUData payUData,
-  })  : this.isTest = true,
-        this.payUData = payUData,
+    @required PayUData payUData,
+  })  : isTest = true,
+        payUData = payUData,
         assert(payUData != null),
         assert(payUData.udf.length <= 10);
 
-  FlutterPayUMoney.production({PayUData payUData})
-      : this.isTest = false,
-        this.payUData = payUData,
+  FlutterPayUMoney.production({@required PayUData payUData})
+      : isTest = false,
+        payUData = payUData,
         assert(payUData != null),
         assert(payUData.udf.length <= 10);
 
-  pay({Function(dynamic) successResponse, Function failureResponse}) async {
+  Future<void> pay({Function(dynamic) successResponse, Function failureResponse}) async {
     _generateUDF();
     var result;
-    if (isTest)
+    if (isTest) {
       result = await _channel.invokeMethod('testPay', payUData.toJson());
-    else
+    } else {
       result = await _channel.invokeMethod('livePay', payUData.toJson());
-    print("transaction result :: $result");
-    if (result != null)
+    }
+    print('transaction result :: $result');
+    if (result != null) {
       successResponse(result);
-    else
+    } else {
       failureResponse(result);
+    }
   }
 
-  hashIt() async {
-    print("hashData :: ${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|"
+  Future<String> hashIt() async {
+    print('hashData :: ${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|'
         "${payUData.firstName}|${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
 
     payUData.hash = await _channel.invokeMethod(
-        "hashIt",
-        "${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|${payUData.firstName}|"
+        'hashIt',
+        '${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|${payUData.firstName}|'
             "${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
 
-    print("hashedIt:: ${payUData.hash}");
+    print('hashedIt:: ${payUData.hash}');
+    return payUData.hash;
   }
 
   List<String> _generateUDF() {
-    List<String> createUDF = payUData.udf;
+    var createUDF = payUData.udf;
     if (createUDF.length < 10) {
-      for (int i = payUData.udf.length; i < 10; i++) {
-        createUDF.add("");
+      for (var i = payUData.udf.length; i < 10; i++) {
+        createUDF.add('');
       }
     }
     return createUDF;

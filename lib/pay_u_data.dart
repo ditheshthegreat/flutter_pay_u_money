@@ -12,8 +12,10 @@ class PayUData {
     this.productName,
     this.amount,
     this.hash,
+    this.sUrl,
+    this.fUrl,
     udf,
-  }) : this.udf = udf == null ? List<String>.generate(10, (index) => "") : udf;
+  }) : udf = udf ?? List<String>.generate(10, (index) => '');
 
   String amount;
   String txnId;
@@ -25,38 +27,44 @@ class PayUData {
   String email;
   String hash;
   String salt;
+  String sUrl;
+  String fUrl;
 
   ///maximum 10 udf
   List<String> udf;
 
   factory PayUData.fromJson(Map<String, dynamic> json) => PayUData(
-        merchantKey: json["merchantKey"] == null ? null : json["merchantKey"],
-        merchantId: json["merchantId"] == null ? null : json["merchantId"],
-        firstName: json["firstName"] == null ? null : json["firstName"],
-        email: json["email"] == null ? null : json["email"],
-        phone: json["phone"] == null ? null : json["phone"],
-        txnId: json["txnId"] == null ? null : json["txnId"],
-        productName: json["productName"] == null ? null : json["productName"],
-        amount: json["amount"] == null ? null : json["amount"],
-        hash: json["hash"] == null ? null : json["hash"],
-        salt: json["salt"] == null ? null : json["salt"],
-        udf: json["udf"] == null
-            ? List<String>.generate(10, (index) => "")
-            : List<String>.from(json["udf"].map((x) => x)),
+        merchantKey: json['merchantKey'],
+        merchantId: json['merchantId'],
+        firstName: json['firstName'],
+        email: json['email'],
+        phone: json['phone'],
+        txnId: json['txnId'],
+        productName: json['productName'],
+        amount: json['amount'],
+        hash: json['hash'],
+        salt: json['salt'],
+        sUrl: json['sUrl'],
+        fUrl: json['fUrl'],
+        udf: json['udf'] == null
+            ? List<String>.generate(10, (index) => '')
+            : List<String>.from(json['udf'].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "merchantKey": merchantKey == null ? null : merchantKey,
-        "merchantId": merchantId == null ? null : merchantId,
-        "firstName": firstName == null ? null : firstName,
-        "email": email == null ? null : email,
-        "phone": phone == null ? null : phone,
-        "txnId": txnId == null ? null : txnId,
-        "productName": productName == null ? null : productName,
-        "amount": amount == null ? null : amount,
-        "hash": hash == null ? null : hash,
-        "salt": salt == null ? null : salt,
-        "udf": udf == null ? null : List<dynamic>.from(udf.map((x) => x)),
+        'merchantKey': merchantKey,
+        'merchantId': merchantId,
+        'firstName': firstName,
+        'email': email,
+        'phone': phone,
+        'txnId': txnId,
+        'productName': productName,
+        'amount': amount,
+        'hash': hash,
+        'salt': salt,
+        'sUrl': sUrl,
+        'fUrl': fUrl,
+        'udf': udf == null ? null : List<dynamic>.from(udf.map((x) => x)),
       };
 
   @override
