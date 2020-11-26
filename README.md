@@ -5,8 +5,8 @@ A Flutter plugin for payumoney gateway in the mobile platform. Supports Android 
 
 
 # Contributing
-**Currently supported for only Android Platform. Not for iOS right now but wait for some more days it will be here with new update.
-And one more thing if you want to make it more better or want to add more platforms support then feel free to contribute.**
+**Currently supported for only Android Platform. Not for iOS right now.
+If you want to make it more better or want to add more platforms support then feel free to contribute.**
 
 
 #### Initiate Payment
