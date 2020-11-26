@@ -25,13 +25,13 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     var _payuData = PayUData(
       ///your merchant ID
-      merchantId: '7290778',
+      merchantId: '',
 
       ///your merchant key
-      merchantKey: 'OlVevRfJ',
+      merchantKey: '',
 
       ///your salt
-      salt: 'Uvd6Mj7rDI',
+      salt: '',
 
       ///product name
       productName: 'blah blah',

@@ -1,5 +1,8 @@
 
 ## 0.5.2+2
+* Fixed minor bugs
+
+## 0.5.2+2
 * This is just a version bump to republish as 0.5.2+1 was published with some dirty local state.
 
 ## 0.5.2+1
