@@ -1,4 +1,6 @@
 
+## 0.5.5
+* Fixed Payment Failure
 ## 0.5.4
 * Fixed minor bugs
 ## 0.5.3

@@ -1,6 +1,6 @@
 name: flutter_pay_u_money
 description: Flutter plugin for making payment through payUmoney gateway. An Easiest way to Collect Payments.
-version: 0.5.4
+version: 0.5.5
 homepage: "https://github.com/ditheshthegreat/flutter_pay_u_money"
 
 environment:

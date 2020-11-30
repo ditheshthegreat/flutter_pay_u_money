@@ -32,6 +32,7 @@ class FlutterPayUMoney {
   /// ```
   /// await flutterPayUMoney.hashIt();
   /// ```
+  ///
   Future<void> pay(
       {Function(dynamic) successResponse, Function failureResponse}) async {
     assert(payUData.hash != null && payUData.hash.isNotEmpty,
@@ -41,41 +42,55 @@ class FlutterPayUMoney {
     var result;
     if (_isTest) {
       try {
-        result = await _channel.invokeMethod('testPay', payUData.toJson());
+        result = await _channel
+            .invokeMethod('testPay', payUData.toJson())
+            .catchError((onError) {
+          debugPrint(
+              'Payment Failed :: ${(onError as PlatformException).toString()}');
+          failureResponse((onError as PlatformException).details);
+        });
       } on Exception catch (e) {
-        result = 'Something went wrong. ${e.toString}';
+        throw 'Something went wrong ${e.toString()}';
       }
     } else {
       try {
-        result = await _channel.invokeMethod('livePay', payUData.toJson());
+        result = await _channel
+            .invokeMethod('livePay', payUData.toJson())
+            .catchError((onError) {
+          debugPrint(
+              'Payment Failed :: ${(onError as PlatformException).toString()}');
+          failureResponse((onError as PlatformException).details);
+        });
       } on Exception catch (e) {
         result = 'Something went wrong. ${e.toString}';
       }
     }
-    print('transaction result :: $result');
+    debugPrint('transaction result :: $result');
     if (result != null) {
       successResponse(result);
-    } else {
-      failureResponse(result);
     }
   }
 
   ///To generate hash natively.
   Future<String> hashIt() async {
-    print(
+    debugPrint(
         'hashData :: ${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|'
         "${payUData.firstName}|${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
 
     try {
-      payUData.hash = await _channel.invokeMethod(
-          'hashIt',
-          '${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|${payUData.firstName}|'
-              "${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
+      payUData.hash = await _channel
+          .invokeMethod(
+              'hashIt',
+              '${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|${payUData.firstName}|'
+                  "${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}")
+          .catchError((onError) {
+        throw (onError as PlatformException).toString();
+      });
     } on Exception catch (e) {
-      throw '${e.toString()}';
+      throw 'Hashing error ${e.toString()}';
     }
 
-    print('hashedIt:: ${payUData.hash}');
+    debugPrint('hashedIt:: ${payUData.hash}');
     return payUData.hash;
   }
 
