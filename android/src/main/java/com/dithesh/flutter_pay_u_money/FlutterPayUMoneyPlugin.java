@@ -185,7 +185,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         // Result Code is -1 send from Payumoney activity
-        Log.d("Selfride", "request code " + requestCode + " resultcode " + resultCode);
+        Log.d(FlutterPayUMoneyPlugin.class.getSimpleName(), "request code " + requestCode + " resultcode " + resultCode);
         if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data !=
                 null) {
             TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager
@@ -194,13 +194,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
             ResultModel resultModel = data.getParcelableExtra(PayUmoneyFlowManager.ARG_RESULT);
             // Check which object is non-null
             if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
-                if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
-                    //Success Transaction
-                    wholeResult.success(transactionResponse.getPayuResponse());
-                } else {
-                    //Failure Transaction
-                    wholeResult.error("400", "Something went wrong!", transactionResponse.getPayuResponse());
-                }
+                wholeResult.success(transactionResponse.getPayuResponse());
 
             } else if (resultModel != null && resultModel.getError() != null) {
                 Log.d(TAG, "Error response : " + resultModel.getError().getTransactionResponse());

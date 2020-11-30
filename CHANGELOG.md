@@ -1,5 +1,7 @@
 
-## 0.5.2+2
+## 0.5.4
+* Fixed minor bugs
+## 0.5.3
 * Fixed minor bugs
 
 ## 0.5.2+2

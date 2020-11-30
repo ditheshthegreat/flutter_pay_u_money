@@ -40,9 +40,17 @@ class FlutterPayUMoney {
     _generateUDF();
     var result;
     if (_isTest) {
-      result = await _channel.invokeMethod('testPay', payUData.toJson());
+      try {
+        result = await _channel.invokeMethod('testPay', payUData.toJson());
+      } on Exception catch (e) {
+        result = 'Something went wrong. ${e.toString}';
+      }
     } else {
-      result = await _channel.invokeMethod('livePay', payUData.toJson());
+      try {
+        result = await _channel.invokeMethod('livePay', payUData.toJson());
+      } on Exception catch (e) {
+        result = 'Something went wrong. ${e.toString}';
+      }
     }
     print('transaction result :: $result');
     if (result != null) {
@@ -58,10 +66,14 @@ class FlutterPayUMoney {
         'hashData :: ${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|'
         "${payUData.firstName}|${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
 
-    payUData.hash = await _channel.invokeMethod(
-        'hashIt',
-        '${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|${payUData.firstName}|'
-            "${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
+    try {
+      payUData.hash = await _channel.invokeMethod(
+          'hashIt',
+          '${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|${payUData.firstName}|'
+              "${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
+    } on Exception catch (e) {
+      throw '${e.toString()}';
+    }
 
     print('hashedIt:: ${payUData.hash}');
     return payUData.hash;
