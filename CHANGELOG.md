@@ -1,4 +1,6 @@
 
+## 0.5.7
+* Fixed minor bugs
 ## 0.5.6
 * Fixed minor bugs
 ## 0.5.5

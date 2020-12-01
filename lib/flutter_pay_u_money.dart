@@ -33,9 +33,15 @@ class FlutterPayUMoney {
   /// await flutterPayUMoney.hashIt();
   /// ```
   ///
+  /// StatusCode
+  /// ```
+  /// 200 = Success
+  /// 400 = Failed
+  /// 401 = Validation Error
+  /// 402 = User Payment Cancelled
+  /// ```
   Future<void> pay(
-      {Function(String statusCode, dynamic) successResponse,
-      Function(String statusCode, dynamic) failureResponse}) async {
+      {Function(String statusCode, dynamic) paymentResponse}) async {
     assert(payUData.hash != null && payUData.hash.isNotEmpty,
         'payUData.hash was called on null or empty. generate hash from server side or call method hashIt before calling pay method');
 
@@ -48,7 +54,7 @@ class FlutterPayUMoney {
             .catchError((onError) {
           debugPrint(
               'Payment Failed :: ${(onError as PlatformException).toString()}');
-          failureResponse((onError as PlatformException).code,
+          paymentResponse((onError as PlatformException).code,
               (onError as PlatformException).details);
         });
       } on Exception catch (e) {
@@ -61,7 +67,7 @@ class FlutterPayUMoney {
             .catchError((onError) {
           debugPrint(
               'Payment Failed :: ${(onError as PlatformException).toString()}');
-          failureResponse((onError as PlatformException).code,
+          paymentResponse((onError as PlatformException).code,
               (onError as PlatformException).details);
         });
       } on Exception catch (e) {
@@ -70,12 +76,12 @@ class FlutterPayUMoney {
     }
     debugPrint('transaction result :: $result');
     if (result != null) {
-      successResponse('200', result);
+      paymentResponse('200', result);
     }
   }
 
   ///To generate hash natively.
-  Future<String> hashIt() async {
+  Future<void> hashIt() async {
     debugPrint(
         'hashData :: ${payUData.merchantKey}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|'
         "${payUData.firstName}|${payUData.email}|${_generateUDF().join("|")}|${payUData.salt}");
@@ -94,7 +100,6 @@ class FlutterPayUMoney {
     }
 
     debugPrint('hashedIt:: ${payUData.hash}');
-    return payUData.hash;
   }
 
   ///Generate UDF up to ten when user gives blank udf.

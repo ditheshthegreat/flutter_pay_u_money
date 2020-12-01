@@ -60,18 +60,23 @@ var _payuData = PayUData(
 #### Start Payment
 
 ```
-  await _flutterPayUMoney.pay(successResponse: (data) {
-    setState(() {
-      _resultData = data;
-    });
-  }, failureResponse: (data) {
-    print(data);
-    setState(() {
-      _resultData = data;
-    });
-  });
-  }
+    await _flutterPayUMoney.pay(
+      paymentResponse: (statusCode, data) {
+        print('$statusCode :: $data');
+        setState(() {
+          _resultData = '$statusCode :: $data';
+        });
+      },
+    );
 ```
+#### Payment Response Status Code
+
+Code | Status |
+--- | --- | 
+200 | Success |
+400 | Failure |
+401 | Validation Error |
+402 | User Payment Cancelled  |
 
 - [See example for more details](https://pub.dev/packages/flutter_pay_u_money/example)
 

@@ -157,7 +157,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
             mPaymentParams.setMerchantHash(hash);
             PayUmoneyFlowManager.startPayUMoneyFlow(mPaymentParams, activity, R.style.AppTheme_default, false);
         } catch (Exception e) {
-            wholeResult.error("403", e.getMessage(), e.getMessage());
+            wholeResult.error("401", e.getMessage(), e.getMessage());
             e.printStackTrace();
 
         }
@@ -210,7 +210,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
             }
         } else {
             if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT)
-                wholeResult.error("405", "User Cancelled Payment", null);
+                wholeResult.error("402", "User Cancelled Payment", "User Cancelled Payment");
         }
         return true;
     }

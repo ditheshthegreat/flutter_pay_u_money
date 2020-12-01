@@ -72,16 +72,14 @@ class _MyAppState extends State<MyApp> {
 
     ///if you want generate hash call [hashIt()]
     await _flutterPayUMoney.hashIt();
-    await _flutterPayUMoney.pay(successResponse: (statusCode, data) {
-      setState(() {
-        _resultData = '$statusCode :: $data';
-      });
-    }, failureResponse: (statusCode, data) {
-      print(data);
-      setState(() {
-        _resultData = '$statusCode :: $data';
-      });
-    });
+    await _flutterPayUMoney.pay(
+      paymentResponse: (statusCode, data) {
+        print('$statusCode :: $data');
+        setState(() {
+          _resultData = '$statusCode :: $data';
+        });
+      },
+    );
   }
 
   @override
