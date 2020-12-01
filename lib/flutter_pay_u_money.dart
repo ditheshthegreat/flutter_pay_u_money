@@ -27,14 +27,15 @@ class FlutterPayUMoney {
         assert(payUData.udf.length <= 10);
 
   ///call to launch payumoney gateway.
-  ///Before call this method make sure the hash is not null.
+  ///Before calling this method make sure the hash is not null.
   /// For generating hash natively call.
   /// ```
   /// await flutterPayUMoney.hashIt();
   /// ```
   ///
   Future<void> pay(
-      {Function(dynamic) successResponse, Function failureResponse}) async {
+      {Function(String statusCode, dynamic) successResponse,
+      Function(String statusCode, dynamic) failureResponse}) async {
     assert(payUData.hash != null && payUData.hash.isNotEmpty,
         'payUData.hash was called on null or empty. generate hash from server side or call method hashIt before calling pay method');
 
@@ -47,7 +48,8 @@ class FlutterPayUMoney {
             .catchError((onError) {
           debugPrint(
               'Payment Failed :: ${(onError as PlatformException).toString()}');
-          failureResponse((onError as PlatformException).details);
+          failureResponse((onError as PlatformException).code,
+              (onError as PlatformException).details);
         });
       } on Exception catch (e) {
         throw 'Something went wrong ${e.toString()}';
@@ -59,15 +61,16 @@ class FlutterPayUMoney {
             .catchError((onError) {
           debugPrint(
               'Payment Failed :: ${(onError as PlatformException).toString()}');
-          failureResponse((onError as PlatformException).details);
+          failureResponse((onError as PlatformException).code,
+              (onError as PlatformException).details);
         });
       } on Exception catch (e) {
-        result = 'Something went wrong. ${e.toString}';
+        throw 'Something went wrong ${e.toString()}';
       }
     }
     debugPrint('transaction result :: $result');
     if (result != null) {
-      successResponse(result);
+      successResponse('200', result);
     }
   }
 
