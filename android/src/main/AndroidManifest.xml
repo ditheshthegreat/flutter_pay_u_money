@@ -3,9 +3,4 @@
     package="com.dithesh.flutter_pay_u_money">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <application
-        android:name="io.flutter.app.FlutterApplication"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        tools:replace="label" />
 </manifest>

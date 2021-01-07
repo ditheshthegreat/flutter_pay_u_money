@@ -87,6 +87,7 @@ public class FlutterPayUMoneyPlugin implements FlutterPlugin, MethodCallHandler,
 
     }
 
+
     @Override
     public void onDetachedFromActivity() {
 

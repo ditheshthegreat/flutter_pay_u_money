@@ -9,12 +9,19 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(home: PayUMoney());
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class PayUMoney extends StatefulWidget {
+  @override
+  _PayUMoneyState createState() => _PayUMoneyState();
+}
+
+class _PayUMoneyState extends State<PayUMoney> {
   var _resultData;
 
   @override
@@ -84,25 +91,23 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter PayUMoney example app'),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: RaisedButton(
-                  onPressed: () {
-                    initPlatformState();
-                  },
-                  child: Text('Pay')),
-            ),
-            Text('Result: $_resultData'),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter PayUMoney example app'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: RaisedButton(
+                onPressed: () {
+                  initPlatformState();
+                },
+                child: Text('Pay')),
+          ),
+          Text('Result : $_resultData'),
+        ],
       ),
     );
   }
